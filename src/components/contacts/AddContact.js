@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import TextInputGroup from '../layout/TextInputGroup';
-
+import { connect } from "react-redux";
+import { addContacts } from "../../Actions/contactActions";
+import PropTypes from 'prop-types'
+import uuid from 'uuid'
 class AddContact extends Component {
   state = {
     name: '',
@@ -10,43 +13,45 @@ class AddContact extends Component {
   };
 
   onSubmit = (e) => {
-    e.preventDefault();
+        e.preventDefault();
 
-    const { name, email, phone } = this.state;
+        const { name, email, phone } = this.state;
 
-    // Check For Errors
-    if (name === '') {
-      this.setState({ errors: { name: 'Name is required' } });
-      return;
-    }
+        // Check For Errors
+        if (name === '') {
+          this.setState({ errors: { name: 'Name is required' } });
+          return;
+        }
 
-    if (email === '') {
-      this.setState({ errors: { email: 'Email is required' } });
-      return;
-    }
+        if (email === '') {
+          this.setState({ errors: { email: 'Email is required' } });
+          return;
+        }
 
-    if (phone === '') {
-      this.setState({ errors: { phone: 'Phone is required' } });
-      return;
-    }
+        if (phone === '') {
+          this.setState({ errors: { phone: 'Phone is required' } });
+          return;
+        }
 
-    const newContact = {
-      name,
-      email,
-      phone
-    };
+        const newContact = {
+          id:uuid(),
+          name,
+          email,
+          phone
+        };
 
-    //// SUBMIT CONTACT ////
+        this.props.addContacts(newContact)
+        //// SUBMIT CONTACT ////
 
-    // Clear State
-    this.setState({
-      name: '',
-      email: '',
-      phone: '',
-      errors: {}
-    });
+        // Clear State
+        this.setState({
+          name: '',
+          email: '',
+          phone: '',
+          errors: {}
+        });
 
-    this.props.history.push('/');
+        this.props.history.push('/');
   };
 
   onChange = e => this.setState({ [e.target.name]: e.target.value });
@@ -95,5 +100,7 @@ class AddContact extends Component {
     );
   }
 }
-
-export default AddContact;
+AddContact.propTypes={
+  addContacts:PropTypes.func.isRequired
+}
+export default connect(null,{addContacts})( AddContact);
