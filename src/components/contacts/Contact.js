@@ -48,9 +48,21 @@ class Contact extends Component {
           </Link>
         </h4>
         {showContactInfo ? (
-          <ul className="list-group text-primary">
-            <li className="list-group-item">Email: {email}</li>
-            <li className="list-group-item">Phone: {phone}</li>
+          <ul className="list-group">
+            <li className="list-group-item">
+                <span className="text-primary">
+                   <strong>Email:</strong>
+                </span>
+                <a href={"https://"+email} target="_blank">
+                  {email}
+                </a>
+            </li>
+            <li className="list-group-item">
+                <span className="text-primary">
+                  <strong>Phone:</strong>
+                </span>
+                 {phone}
+            </li>
           </ul>
         ) : null}
       </div>

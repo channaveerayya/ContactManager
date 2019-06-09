@@ -5,7 +5,8 @@ import PropTypes from "prop-types";
 import { getContacts } from "../../Actions/contactActions";
 class Contacts extends Component {
  componentDidMount(){
-   this.props.getContacts();
+   const{id} =this.props.match.params;
+   this.props.getContacts(id);
  }
   render() {
     
